@@ -57,3 +57,23 @@ const iniciar_partida = () => {
 }
 
 iniciar_partida();
+
+// Arreglos
+
+const personajes = ["Fizz"]; //Aqui se esta guardando lo que tiene una direccion de memoria
+const arreglo2 = new Array();
+
+personajes.push("Irelia");
+personajes[10] = "Leona";
+
+// Arreglos asociativos
+personajes["hola"] = "Lux";
+
+// Recorrido tradicional del arreglo
+for (let i = 0; i < personajes.length; i++) {
+    console.log(personajes[i]);
+}
+
+for (let personaje in personajes) {
+    console.log(personaje);
+}
