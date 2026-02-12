@@ -5,3 +5,15 @@ body {
 li {
     color: darkgray;
 }
+
+.tanque { /* Clases */
+    color: red;
+}
+
+#vi { /* Identificador */
+    font-size: large;
+}
+
+.tanque:hover{ /* Cuando el mouse pase sobre la palabra */
+    font-size: larger;
+}
