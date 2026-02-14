@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Laboratorio 4 - JavaScript</title>
+</head>
+<body>
+
+<h1>Laboratorio 4 - JavaScript</h1>
+
+<script>
+
+// Ejercicio Tabla
+
+const numeroInput = prompt("1. Ingresa un número:");
+const numero = parseInt(numeroInput);
+
+if (!isNaN(numero) && numero > 0) {
+
+    document.write("<h2>Punto 1</h2>");
+    document.write("<table border='1'>");
+    document.write("<tr><th>Número</th><th>Cuadrado</th><th>Cubo</th></tr>");
+
+    for (let i = 1; i <= numero; i++) {
+        document.write("<tr>");
+        document.write("<td>" + i + "</td>");
+        document.write("<td>" + (i*i) + "</td>");
+        document.write("<td>" + (i*i*i) + "</td>");
+        document.write("</tr>");
+    }
+
+    document.write("</table>");
+}
+
+// Ejercicio Suma Random
+
+document.write("<h2>Punto 2</h2>");
+
+const a = Math.floor(Math.random() * 10);
+const b = Math.floor(Math.random() * 10);
+
+const inicio = Date.now();
+const respuesta = prompt("¿Cuánto es " + a + " + " + b + "?");
+const fin = Date.now();
+
+const tiempo = (fin - inicio) / 1000;
+const correcta = parseInt(respuesta) === (a + b);
+
+document.write("<p>Resultado: " + (correcta ? "Correcto" : "Incorrecto") + "</p>");
+document.write("<p>Tiempo: " + tiempo + " segundos</p>");
+
+// Ejercicio Contador
+
+function contador(arreglo) {
+    let negativos = 0;
+    let ceros = 0;
+    let positivos = 0;
+
+    for (let num of arreglo) {
+        if (num < 0) negativos++;
+        else if (num === 0) ceros++;
+        else positivos++;
+    }
+
+    return { negativos, ceros, positivos };
+}
+
+// Ejercicio Promedios
+
+console.assert(contador([-1,0,5]).negativos === 1);
+console.assert(contador([-1,0,5]).ceros === 1);
+console.assert(contador([-1,0,5]).positivos === 1);
+
+const resultadoContador = contador([-5,0,2,8,-3,0]);
+document.write("<h2>Punto 3</h2>");
+document.write("<p>Negativos: " + resultadoContador.negativos + "</p>");
+document.write("<p>Ceros: " + resultadoContador.ceros + "</p>");
+document.write("<p>Positivos: " + resultadoContador.positivos + "</p>");
+
+function promedios(matriz) {
+    return matriz.map(fila =>
+        fila.reduce((a,b) => a+b, 0) / fila.length
+    );
+}
+
+console.assert(promedios([[1,2],[3,4]])[0] === 1.5);
+console.assert(promedios([[1,2],[3,4]])[1] === 3.5);
+
+const resultadoProm = promedios([[10,20],[5,15,25]]);
+document.write("<h2>Punto 4</h2>");
+document.write("<p>Promedios: " + resultadoProm.join(", ") + "</p>");
+
+// Ejercicio Inverso
+
+function inverso(num) {
+    return parseInt(num.toString().split("").reverse().join(""));
+}
+
+// Pruebas
+console.assert(inverso(1234) === 4321);
+console.assert(inverso(100) === 1);
+
+document.write("<h2>Punto 5</h2>");
+document.write("<p>Inverso de 1234: " + inverso(1234) + "</p>");
+
+// Ejercicio Propio
+
+class Ahorro {
+    constructor(nombre, saldoInicial) {
+        this.nombre = nombre;
+        this.saldo = saldoInicial;
+    }
+
+    depositar(cantidad) {
+        this.saldo += cantidad;
+    }
+
+    retirar(cantidad) {
+        if (cantidad <= this.saldo) {
+            this.saldo -= cantidad;
+        }
+    }
+
+    mostrarSaldo() {
+        return this.saldo;
+    }
+}
+
+// Pruebas
+const cuenta = new Ahorro("César", 1000);
+cuenta.depositar(500);
+cuenta.retirar(200);
+
+console.assert(cuenta.mostrarSaldo() === 1300);
+
+document.write("<h2>Punto 6 - Simulador de ahorro</h2>");
+document.write("<p>Nombre: " + cuenta.nombre + "</p>");
+document.write("<p>Saldo final: $" + cuenta.mostrarSaldo() + "</p>");
+
+</script>
+
+<section>
+    <h2>Preguntas Teóricas de JavaScript</h2>
+
+    <ol>
+
+        <li>
+            <strong>¿Qué diferencias y semejanzas hay entre Java y JavaScript?</strong>
+            <p>
+                <strong>Semejanzas:</strong> Ambos usan sintaxis similar basada en C,
+                ambos son orientados a objetos y ambos pueden usarse para desarrollar aplicaciones.
+            </p>
+            <p>
+                <strong>Diferencias:</strong> Java es un lenguaje compilado y fuertemente tipado,
+                mientras que JavaScript es interpretado y débilmente tipado. 
+                Java se usa principalmente en aplicaciones backend y móviles,
+                mientras que JavaScript se usa principalmente en desarrollo web.
+            </p>
+        </li>
+
+        <li>
+            <strong>¿Qué métodos tiene el objeto Date? (Menciona al menos 5)</strong>
+            <p>
+                Algunos métodos del objeto Date son:
+            </p>
+            <ul>
+                <li>getFullYear()</li>
+                <li>getMonth()</li>
+                <li>getDate()</li>
+                <li>getHours()</li>
+                <li>getMinutes()</li>
+                <li>getSeconds()</li>
+                <li>setFullYear()</li>
+            </ul>
+        </li>
+
+        <li>
+            <strong>¿Qué métodos tienen los arreglos? (Menciona al menos 5)</strong>
+            <p>
+                Algunos métodos importantes de los arreglos en JavaScript son:
+            </p>
+            <ul>
+                <li>push()</li>
+                <li>pop()</li>
+                <li>shift()</li>
+                <li>unshift()</li>
+                <li>slice()</li>
+                <li>splice()</li>
+                <li>map()</li>
+                <li>filter()</li>
+                <li>reduce()</li>
+            </ul>
+        </li>
+
+        <li>
+            <strong>¿Cómo se declara una variable con alcance local dentro de una función?</strong>
+            <p>
+                Se declara utilizando las palabras reservadas <code>let</code> o <code>const</code>
+                dentro del bloque de la función.
+            </p>
+            <pre>
+function ejemplo() {
+    let variableLocal = 10;
+    const otraVariable = 20;
+}
+            </pre>
+        </li>
+
+        <li>
+            <strong>¿Qué implicaciones tiene utilizar variables globales dentro de funciones?</strong>
+            <p>
+                El uso de variables globales puede generar conflictos de nombres,
+                modificar datos de manera accidental y hacer el código más difícil de mantener.
+                Además, cualquier función puede alterar su valor, lo que puede provocar errores inesperados.
+            </p>
+        </li>
+
+    </ol>
+</section>
+
+
+</body>
+</html>
