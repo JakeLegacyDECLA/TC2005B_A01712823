@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio 1</title>
+</head>
+<body>
+
+    <header>
+        <h1>César Daniel Aguilar Kuri</h1>
+        <ul>
+            <li>A01712823</li>
+            <li>A01712823@tec.mx</li>
+        </ul>
+    </header>
+
+    <button onclick="cambiarImagen()">Usa este botón para mejorar la banda</button>
+    <img id="totherats" src="TTRAW.jpg" width=300 height=200> 
+
+    <script>
+        function cambiarImagen() {
+            document.getElementById("totherats").src = "HYPAHYPA.jpg";
+        }
+    </script>
+
+    <h4>Utilicé Visual Studio Code como editor de HTML</h4>
+
+    <h4>Preguntas de la actividad</h4>
+
+    <ul>
+        <li><strong>¿Cuál es la diferencia entre Internet y la World Wide Web?</strong></li>
+        <h5>Internet es la estructura global de redes interconectadas que utilizan el protocolo TCP e IP, mientras que la World Wide Web es un servicio que funciona sobre internet y permite acceder a documentos interconectados mediante HTTP y navegadores web. (Internet Society. (s.f.). What is the Internet? https://www.internetsociety.org/internet/what-is-the-internet/)</h5>
+        <li><strong>¿Cuáles son las partes de un URL?</strong></li>
+        <h5>En un URL tenemos el protocolo (HTTPS), el dominio (www.ejemplo.com), el puerto (8808), la ruta (/ruta/pagina.html), un query string (?clave=valor), y el fragmento (#seccion). (Berners-Lee, T., Fielding, R., & Masinter, L. (2005). RFC 3986: Uniform Resource Identifier (URI): Generic Syntax. Internet Engineering Task Force. https://doi.org/10.17487/RFC3986)</h5>
+        <li><strong>¿Cuál es el propósito de los métodos HTTP: GET, HEAD, POST, PUT, PATCH, DELETE?</strong></strong></li>
+        <h5>GET: Solicita recursos del servidor, HEAD: Igual que GET pero este devuelve encabezados, POST: Envía datos al servidor, PUT: Reemplaza un recurso, PATCH: Modifica parcialmente un recurso y DELETE: elimina un recurso. (Fielding, R., Nottingham, M., & Reschke, J. (2022). RFC 9110: HTTP Semantics. Internet Engineering Task Force. https://doi.org/10.17487/RFC9110)</h5>
+        <li><strong>¿Qué método HTTP se debe utilizar al enviar un formulario HTML, por ejemplo cuando ingresas tu usuario y contraseña en algún sitio? ¿Por qué?</strong></li>
+        <h5>Se debe usar el método POST ya que estamos mandando datos al servidor que deben ser comparados en la base de datos, y envía los datos en el cuerpo de la solicitud, no en el URL (mayor seguridad). (Mozilla. (s.f.). HTTP request methods. MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)</h5>
+        <li><strong>¿Qué método HTTP se utiliza cuando a través de un navegador web se accede a una página a través de un URL?</strong></li>
+        <h5>Se utiliza el GET, pues está solicitando un recurso, que en este caso es la página web. (Mozilla. (s.f.). GET. MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET) </h5>
+        <li><strong>Un servidor web devuelve una respuesta HTTP con código 200. ¿Qué significa esto? ¿Ocurrió algún error?</strong></li>
+        <h5> Significa que la respuesta del servidor fue exitosa con su acción. (Fielding, R., Nottingham, M., & Reschke, J. (2022). RFC 9110: HTTP Semantics. Internet Engineering Task Force. https://doi.org/10.17487/RFC9110)</h5>
+        <li><strong>¿Es responsabilidad del desarrollador corregir un sitio web si un usuario reporta que intentó acceder al sitio y se encontró con un error 404? ¿Por qué?</strong></li>
+        <h5> Depende, porque el error 404 solo avisa que un recurso no existe o no se encuentra en ese momento, si es un enlace roto si es culpa del desarrollador, si el usuario escribió mal la URL no es culpa del desarrollador. (Mozilla. (s.f.). 404 Not Found. MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404)</h5>
+        <li><strong>¿Es responsabilidad del desarrollador corregir un sitio web si un usuario reporta que intentó acceder al sitio y se encontró con un error 500? ¿Por qué?</strong></li>
+        <h5> Si, este error es total fallo del servidor, problema con el backend o configuración. (Mozilla. (s.f.). 500 Internal Server Error. MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500)</h5>
+        <li><strong>¿Qué significa que un atributo HTML5 esté depreciado o desaprobado (deprecated)? Menciona algunos elementos de HTML 4 que en HTML5 estén desaprobados.</strong></li>
+        <h5> Deprecated significa que ya no se recomienda y debería eliminarse en futuras versiones, algunos ejemplos son font, center, big y frame. (World Wide Web Consortium. (2014). HTML5 – A vocabulary and associated APIs for HTML and XHTML. https://www.w3.org/TR/html5/)</h5>
+        <li><strong>¿Cuáles son las diferencias principales entre HTML 4 y HTML5?</strong></li>
+        <h5> HTML5 tiene nuevas etiquetas semanticas como header, nav, section y article, soporte multimedia nativo (audio y video), acceso a API's modernas y mejor soporte para formularios. (World Wide Web Consortium. (2014). HTML5 differences from HTML4. https://www.w3.org/TR/html5-diff/)</h5>
+        <li><strong>¿Qué componentes de estructura y estilo tiene una tabla?</strong></li>
+        <h5> table es el contenedor de cualquier tabla en html, thead agrupa el contenido de la cabecera indicando que en su interior existen columnas, tbody agrupa el contenido principal de la tabla, tfoot es el pie de tabla, tr define las filas horizontales, th define una celda de titulo y td define una celda de datos estándar que contiene la información, el estilo de esta misma se puede manipular con CSS. (Mozilla. (s.f.). HTML table basics. MDN Web Docs. https://developer.mozilla.org/en-US/docs/Learn/HTML/Tables/Basics)</h5>
+        <li><strong>¿Cuáles son los principales controles de una forma HTML5?</strong></li>
+        <h5> Tenemos el input que permite meter información desde el teclado, textarea que es más para meter parrafos, select crea listas y menús desplegables, button permite la creación de una (Mozilla. (s.f.). HTML forms. MDN Web Docs. https://developer.mozilla.org/en-US/docs/Learn/Forms)</h5>
+        <li><strong>¿Qué tanto soporte HTML5 tiene el navegador que utilizas? Puedes utilizar la siguiente página para descubrirlo: http://html5test.com/ (Al responder la pregunta recuerda poner el navegador que utilizas)</strong></li>
+        <h5> Yo uso Chrome de Google, y se ve que si tiene bastante soporte con HTML5, solo hay excepciones como la encriptación de extensiones audiovisuales y el reconocimiento de habla. (HTML5Test. (s.f.). The HTML5 test – How well does your browser support HTML5? https://html5test.com/)</h5>
+        <h4>Sobre el ciclo de vida de los sistemas de información</h4>
+        <li><strong>¿Cuál es el ciclo de vida de los sistemas de información?</strong></li>
+        <h5> Planeación, Análisis, Diseño, Implementación, Operación y Mantenimiento. (Guerrero, A. C., & Guerrero, A. C. (2015, July 20). Ciclo de vida de un sistema de información. Gestiopolis. https://www.gestiopolis.com/ciclo-de-vida-de-un-sistema-de-informacion/)</h5>
+        <li><strong>¿Cuál es el ciclo de desarrollo de sistemas de información?</strong></li>
+        <h5> Recolección de requisitos, Análisis, Diseño, Desarrollo, Pruebas, Implementación y Mantenimiento. (IEEE. (2018). ISO/IEC/IEEE 12207:2017 Systems and software engineering — Software life cycle processes. IEEE Standards Association.)</h5>
+    </ul>
+
+    <footer>
+        <h1>Construcción de Software 2026</h1>
+    </footer>
+    
+</body>
+</html>
