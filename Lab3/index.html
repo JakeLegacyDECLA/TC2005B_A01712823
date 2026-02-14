@@ -1,30 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-    <style> /* Intern Style */
-        body {
-            margin: 0 auto;
-            max-width: 50em; /* Unidad universal proporcional */
-        }
-    </style>
-    <link rel="stylesheet" href="lol.min.css">
+    <link rel="stylesheet" href="styles.min.css">
+    <title>Laboratorio 3</title>
 </head>
+
 <body>
-    <h1> League of Legends</h1>
+
+<header>
+    <h1>César Daniel Aguilar Kuri</h1>
     <ul>
-        <li style="color: blue">Gwen</li> <!-- Inline style-->
-        <li class="tanque">Mordekaiser</li>
-        <li>Jax</li>
-        <li class="tanque">Garen</li>
-        <li>Teemo</li>
-        <li id="vi">Vi</li>
-        <li>Veigar</li>
+        <li>A01712823</li>
+        <li>A01712823@tec.mx</li>
     </ul>
-    <button id="boton_desinstalar">Desinstalar</button>
-    <script src="intro.js"></script>
+</header>
+
+<!-- ================= LABORATORIO 1 ================= -->
+
+<section>
+    <h2 class="destacado">Laboratorio 1 - HTML</h2>
+
+    <button onclick="cambiarImagen()">Usa este botón para mejorar la banda</button>
+    <br><br>
+
+    <img id="totherats" src="TTRAW.jpg" width="300" height="200" alt="Imagen de la banda">
+</section>
+
+<section>
+    <h2>Editor utilizado</h2>
+    <p>Utilicé Visual Studio Code como editor de HTML.</p>
+</section>
+
+<section>
+    <h2 class="destacado">Preguntas HTML</h2>
+
+    <ol>
+        <li>
+            <strong>¿Cuál es la diferencia entre Internet y la World Wide Web?</strong>
+            <p>
+                Internet es la estructura global de redes interconectadas que utilizan TCP/IP,
+                mientras que la World Wide Web es un servicio que funciona sobre Internet.
+                <br>
+                (Internet Society. (s.f.). What is the Internet? https://www.internetsociety.org/internet/what-is-the-internet/)
+            </p>
+        </li>
+
+        <li>
+            <strong>¿Cuáles son las partes de un URL?</strong>
+            <p>
+                Protocolo, dominio, puerto, ruta, query string y fragmento.
+                <br>
+                (Berners-Lee, T., Fielding, R., & Masinter, L. (2005). RFC 3986.)
+            </p>
+        </li>
+
+        <li>
+            <strong>¿Qué significa el código HTTP 200?</strong>
+            <p>
+                Indica que la solicitud fue exitosa.
+                <br>
+                (Fielding, R., Nottingham, M., & Reschke, J. (2022). RFC 9110.)
+            </p>
+        </li>
+
+        <li>
+            <strong>¿Qué significa deprecated en HTML5?</strong>
+            <p>
+                Que ya no se recomienda su uso.
+                <br>
+                (W3C. (2014). HTML5.)
+            </p>
+        </li>
+    </ol>
+</section>
+
+<section>
+    <h2>Sobre el ciclo de vida de los sistemas de información</h2>
+
+    <ol>
+        <li>
+            <strong>¿Cuál es el ciclo de vida?</strong>
+            <p>Planeación, Análisis, Diseño, Implementación, Operación y Mantenimiento.</p>
+        </li>
+
+        <li>
+            <strong>¿Cuál es el ciclo de desarrollo?</strong>
+            <p>Recolección de requisitos, Análisis, Diseño, Desarrollo, Pruebas, Implementación y Mantenimiento.</p>
+        </li>
+    </ol>
+</section>
+
+<!-- ================= LABORATORIO 3 ================= -->
+
+<section>
+    <h2 class="destacado">Laboratorio 3 - CSS</h2>
+
+    <ol>
+
+        <li>
+            <strong>¿Qué son las hojas de estilo en cascada (CSS)?</strong>
+            <p>
+                Permiten definir la presentación visual separando contenido y diseño.
+            </p>
+        </li>
+
+        <li>
+            <strong>¿Cuáles son los tres niveles de estilos?</strong>
+            <p>
+                Inline, Document y Externo.
+            </p>
+        </li>
+
+        <li>
+            <strong>¿Qué es un selector de clase?</strong>
+            <p class="info">
+                Permite aplicar un mismo estilo a varios elementos.
+            </p>
+        </li>
+
+        <li>
+            <strong>¿Qué es un selector de id?</strong>
+            <p>
+                Aplica estilo a un único elemento específico.
+            </p>
+        </li>
+
+        <li>
+            <strong>¿Qué es el selector universal?</strong>
+            <p>
+                Se representa con * y afecta todos los elementos.
+            </p>
+        </li>
+
+        <li>
+            <strong>¿Qué son las pseudo-clases?</strong>
+            <p>
+                Se aplican cuando ocurre una acción, como :hover.
+            </p>
+            <button>Ejemplo de pseudo-clase</button>
+        </li>
+
+        <li>
+            <strong>¿Qué es el modelo de caja?</strong>
+            <p>
+                Define contenido, padding, border y margin.
+            </p>
+        </li>
+
+    </ol>
+</section>
+
+<footer>
+    <p>Construcción de Software 2026</p>
+</footer>
+
+<script>
+function cambiarImagen() {
+    const imagen = document.getElementById("totherats");
+    if (imagen.src.includes("TTRAW.jpg")) {
+        imagen.src = "HYPAHYPA.jpg";
+    } else {
+        imagen.src = "TTRAW.jpg";
+    }
+}
+</script>
+
 </body>
 </html>
