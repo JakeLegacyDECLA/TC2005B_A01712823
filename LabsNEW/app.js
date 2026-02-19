@@ -6,6 +6,10 @@ const filesystem = require('fs');
 //Escribir archivo
 filesystem.writeFileSync('hola.txt', 'Hola desde node');
 
+setTimeout(() => {
+    console.log("jojo te hackié!");
+}, 15000);
+
 const arreglo = [5000, 60, 90, 100, 10, 20, 10000, 0, 120, 2000, 340, 1000, 50];
 
 //Sort Asincronico, cuando pasen 5000 milisegundos se imprime el 5000 y etc.
