@@ -10,12 +10,13 @@
 
   <style>
     .help { min-height: 1.2em; }
+    .is-hidden { display: none; }
   </style>
 </head>
 
 <body class="section">
   <header class="container mb-5">
-    <h1 class="title is-2">Formulario de comparación de sesión</h1>
+    <h1 id="mainTitle" class="title is-2">Formulario de comparación de sesión</h1>
     <p class="subtitle">Validador de passwords (coincidencia en tiempo real)</p>
   </header>
 
@@ -26,7 +27,8 @@
         <div class="control">
           <input id="password" class="input" type="password" placeholder="Escribe tu password" required>
         </div>
-        <p id="passwordHelp" class="help">Usa algo que no adivine tu ex.</p>
+
+        <p id="passwordHelp" class="help is-hidden"></p>
       </div>
 
       <div class="field">
@@ -34,7 +36,8 @@
         <div class="control">
           <input id="confirmPassword" class="input" type="password" placeholder="Repítelo igualito" required>
         </div>
-        <p id="confirmHelp" class="help"></p>
+
+        <p id="confirmHelp" class="help is-hidden"></p>
       </div>
 
       <div class="field">
@@ -51,8 +54,11 @@
     const form = document.getElementById("passwordForm");
     const passwordInput = document.getElementById("password");
     const confirmInput = document.getElementById("confirmPassword");
+    const passwordHelp = document.getElementById("passwordHelp");
     const confirmHelp = document.getElementById("confirmHelp");
     const submitBtn = document.getElementById("submitBtn");
+
+    const mainTitle = document.getElementById("mainTitle");
 
     function setState(input, state) {
       input.classList.remove("is-success", "is-danger");
@@ -67,6 +73,7 @@
       if (p2.length === 0) {
         setState(confirmInput, "neutral");
         confirmHelp.textContent = "";
+        confirmHelp.classList.add("is-hidden");
         confirmHelp.classList.remove("is-danger", "is-success");
         submitBtn.disabled = true;
         return;
@@ -75,6 +82,7 @@
       if (p1.length === 0) {
         setState(confirmInput, "danger");
         confirmHelp.textContent = "Primero escribe el password arriba.";
+        confirmHelp.classList.remove("is-hidden");
         confirmHelp.classList.remove("is-success");
         confirmHelp.classList.add("is-danger");
         submitBtn.disabled = true;
@@ -84,20 +92,61 @@
       if (p1 === p2) {
         setState(confirmInput, "success");
         confirmHelp.textContent = "Coinciden";
+        confirmHelp.classList.remove("is-hidden");
         confirmHelp.classList.remove("is-danger");
         confirmHelp.classList.add("is-success");
         submitBtn.disabled = false;
       } else {
         setState(confirmInput, "danger");
         confirmHelp.textContent = "No coinciden";
+        confirmHelp.classList.remove("is-hidden");
         confirmHelp.classList.remove("is-success");
         confirmHelp.classList.add("is-danger");
         submitBtn.disabled = true;
       }
     }
 
+    // Eventos de validación en tiempo real (igual que antes)
     passwordInput.addEventListener("input", validateMatch);
     confirmInput.addEventListener("input", validateMatch);
+
+    // NUEVO: ayuda dinámica (focus / blur) para ambos campos
+    passwordInput.addEventListener("focus", () => {
+      passwordHelp.textContent = "Tip: usa 8+ caracteres y mezcla letras/números.";
+      passwordHelp.classList.remove("is-hidden");
+    });
+
+    passwordInput.addEventListener("blur", () => {
+      if (passwordInput.value.length === 0) {
+        passwordHelp.classList.add("is-hidden");
+        passwordHelp.textContent = "";
+      }
+    });
+
+    confirmInput.addEventListener("focus", () => {
+      confirmHelp.textContent = "Debe ser exactamente igual a la primera.";
+      confirmHelp.classList.remove("is-hidden");
+      confirmHelp.classList.remove("is-danger", "is-success");
+    });
+
+    confirmInput.addEventListener("blur", () => {
+      if (confirmInput.value.length === 0) {
+        confirmHelp.classList.add("is-hidden");
+        confirmHelp.textContent = "";
+      }
+    });
+
+    // NUEVO: cambio de estilo del título sin click
+    mainTitle.addEventListener("mouseover", () => {
+      mainTitle.style.letterSpacing = "1px";
+      mainTitle.style.textShadow = "0 6px 18px rgba(0,0,0,.18)";
+      mainTitle.style.transition = "all .15s ease";
+    });
+
+    mainTitle.addEventListener("mouseout", () => {
+      mainTitle.style.letterSpacing = "";
+      mainTitle.style.textShadow = "";
+    });
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();
