@@ -1,43 +1,108 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" link="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
-    <title>Laboratorio 6</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+
+  <title>Laboratorio 6</title>
+
+  <style>
+    .help { min-height: 1.2em; }
+  </style>
 </head>
-<body>
 
-    <header>
-        <h1 class="is-size-2">Formulario de comparación de sesión</h1>
-    </header>
+<body class="section">
+  <header class="container mb-5">
+    <h1 class="title is-2">Formulario de comparación de sesión</h1>
+    <p class="subtitle">Validador de passwords (coincidencia en tiempo real)</p>
+  </header>
 
-    <!-- [Opción A] Con JavaScript y HTML5 [y quizás CSS], 
-    desarrolla una página para validar passwords. 
-    La página debe tener una forma con 2 campos, el campo de password, 
-    y el campo de verificar password. Utiliza al máximo tu creatividad e ingeniería para que la página sea un 
-    validador de passwords de estado del arte, con la mejor experiencia para el usuario. -->
-
-    <section>
-        <div class="field">
-        <label class="label">Username</label>
-        <div class="control has-icons-left has-icons-right">
-            <input class="input is-success" type="text" placeholder="Text input">
-            <span class="icon is-small is-left">
-            <i class="fas fa-user"></i>
-            </span>
-            <span class="icon is-small is-right">
-            <i class="fas fa-check"></i>
-            </span>
+  <main class="container">
+    <form id="passwordForm" class="box" autocomplete="off">
+      <div class="field">
+        <label class="label" for="password">Password</label>
+        <div class="control">
+          <input id="password" class="input" type="password" placeholder="Escribe tu password" required>
         </div>
-        <p class="help is-success">This username is available</p>
-</div>
-    </section>
+        <p id="passwordHelp" class="help">Usa algo que no adivine tu ex.</p>
+      </div>
 
+      <div class="field">
+        <label class="label" for="confirmPassword">Confirm Password</label>
+        <div class="control">
+          <input id="confirmPassword" class="input" type="password" placeholder="Repítelo igualito" required>
+        </div>
+        <p id="confirmHelp" class="help"></p>
+      </div>
 
-    <footer>
+      <div class="field">
+        <div class="control">
+          <button id="submitBtn" class="button is-link" type="submit" disabled>
+            Enviar
+          </button>
+        </div>
+      </div>
+    </form>
+  </main>
 
-    </footer>
-    
+  <script>
+    const form = document.getElementById("passwordForm");
+    const passwordInput = document.getElementById("password");
+    const confirmInput = document.getElementById("confirmPassword");
+    const confirmHelp = document.getElementById("confirmHelp");
+    const submitBtn = document.getElementById("submitBtn");
+
+    function setState(input, state) {
+      input.classList.remove("is-success", "is-danger");
+      if (state === "success") input.classList.add("is-success");
+      if (state === "danger") input.classList.add("is-danger");
+    }
+
+    function validateMatch() {
+      const p1 = passwordInput.value;
+      const p2 = confirmInput.value;
+
+      if (p2.length === 0) {
+        setState(confirmInput, "neutral");
+        confirmHelp.textContent = "";
+        confirmHelp.classList.remove("is-danger", "is-success");
+        submitBtn.disabled = true;
+        return;
+      }
+
+      if (p1.length === 0) {
+        setState(confirmInput, "danger");
+        confirmHelp.textContent = "Primero escribe el password arriba.";
+        confirmHelp.classList.remove("is-success");
+        confirmHelp.classList.add("is-danger");
+        submitBtn.disabled = true;
+        return;
+      }
+
+      if (p1 === p2) {
+        setState(confirmInput, "success");
+        confirmHelp.textContent = "Coinciden";
+        confirmHelp.classList.remove("is-danger");
+        confirmHelp.classList.add("is-success");
+        submitBtn.disabled = false;
+      } else {
+        setState(confirmInput, "danger");
+        confirmHelp.textContent = "No coinciden";
+        confirmHelp.classList.remove("is-success");
+        confirmHelp.classList.add("is-danger");
+        submitBtn.disabled = true;
+      }
+    }
+
+    passwordInput.addEventListener("input", validateMatch);
+    confirmInput.addEventListener("input", validateMatch);
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("Listo: passwords coinciden. (Demo, no se envió nada)");
+    });
+  </script>
 </body>
 </html>
