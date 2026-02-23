@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Laboratorio 8 - Simple</title>
+</head>
+<body>
+
+<h1>Laboratorio 8</h1>
+
+<button onclick="probarPromedio()">Probar Promedio</button>
+<button onclick="guardarTexto()">Guardar Texto</button>
+<button onclick="fibonacci()">Problema Extra (Fibonacci)</button>
+
+<pre id="salida"></pre>
+
+<script>
+// ===== 1) Promedio =====
+function calcularPromedio(numeros) {
+    if (!Array.isArray(numeros)) {
+        return "Error: no es un arreglo";
+    }
+    if (numeros.length === 0) return 0;
+
+    let suma = 0;
+    for (let i = 0; i < numeros.length; i++) {
+        suma += numeros[i];
+    }
+    return suma / numeros.length;
+}
+
+function probarPromedio() {
+    let arreglo = [1, 2, 3, 4, 5];
+    let resultado = calcularPromedio(arreglo);
+    mostrar("Promedio de [1,2,3,4,5] = " + resultado);
+}
+
+// ===== 2) Escribir string en archivo (descargar .txt) =====
+function escribirTextoEnArchivo(texto) {
+    const blob = new Blob([texto], { type: "text/plain" });
+    const enlace = document.createElement("a");
+    enlace.href = URL.createObjectURL(blob);
+    enlace.download = "texto.txt";
+    enlace.click();
+}
+
+function guardarTexto() {
+    escribirTextoEnArchivo("Texto generado desde index.html");
+    mostrar("Archivo texto.txt descargado.");
+}
+
+// ===== 3) Problema extra (Fibonacci) =====
+function fibonacci() {
+    let n = 10;
+    let a = 0, b = 1;
+    let resultado = [a, b];
+
+    for (let i = 2; i < n; i++) {
+        let siguiente = a + b;
+        resultado.push(siguiente);
+        a = b;
+        b = siguiente;
+    }
+
+    mostrar("Fibonacci (10 números): " + resultado.join(", "));
+}
+function mostrar(texto) {
+    document.getElementById("salida").textContent = texto;
+}
+</script>
+
+</body>
+</html>
