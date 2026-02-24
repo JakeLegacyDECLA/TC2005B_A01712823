@@ -1,0 +1,21 @@
+{
+  "name": "lab11",
+  "version": "1.0.0",
+  "description": "Laboratorios de TC2005B",
+  "homepage": "https://github.com/JakeLegacyDECLA/TC2005B_A01712823#readme",
+  "bugs": {
+    "url": "https://github.com/JakeLegacyDECLA/TC2005B_A01712823/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JakeLegacyDECLA/TC2005B_A01712823.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --watch app.js"
+  }
+}
