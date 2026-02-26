@@ -3,6 +3,14 @@
 <a class="button is-primary" href="/personajes/new">Nuevo personaje</a>
 
 <div class="columns is-multiline mt-4">
+
+        <% if(personajes.length == 0) { %>
+            <div class="column">
+                No hay personajes registrados.
+            </div>
+        <% } else { %>
+
+
   <% for (let personaje of personajes) { %>
     <div class="column is-one-third">
       <div class="box">
