@@ -1,0 +1,14 @@
+=== Nuevo personaje ===
+Fecha: 2026-02-26T20:40:11.023Z
+Nombre: Peopo
+Tipo: Pepo
+Imagen: Peppo
+Descripción: Peo
+------------------------
+=== Nuevo personaje ===
+Fecha: 2026-02-26T20:40:42.802Z
+Nombre: Peopo
+Tipo: Pepo
+Imagen: Peppo
+Descripción: Peo
+------------------------
