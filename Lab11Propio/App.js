@@ -7,6 +7,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 const rutas_personajes = require('./Routes/personajes.routes');
 app.use('/personajes', rutas_personajes);
 
+const ruta_equipos = require('./Routes/equipos.routes');
+app.use('/equipos', ruta_equipos);
+
 //Middleware
 app.use((request, response, next) => {
     console.log('Middleware!');
@@ -14,9 +17,7 @@ app.use((request, response, next) => {
 });
 
 app.use((request, response, next) => {
-    console.log('Otro middleware!');
-    response.send('¡Hola mundo!'); //Manda la respuesta
-});
-
+    response.status(404).send("La ruta no existe");
+})
 
 app.listen(3000);
