@@ -20,5 +20,7 @@ exports.get_old = (request, response, next) => {
 exports.get_list = (request, response, next) => {
     console.log(request.get('Cookie'));
     const personajes = Personaje.fetchAll();
-    response.render('list', {personajes: personajes}); 
+    response.render('list', {
+        username: request.session.username || '',
+        personajes: personajes}); 
 };
