@@ -1,0 +1,29 @@
+<%- include('includes/_header') %>
+
+        <a class="button is-primary" href="/personajes/new">Nuevo personaje</a>
+        <div class="columns">
+
+        <% if(personajes.length == 0) { %>
+            <div class="column">
+                No hay personajes registrados.
+            </div>
+        <% } else { %>
+
+            <% for (let personaje of personajes) { %>
+
+                <div class="column">
+                    <%= personaje.nombre %>
+                    <figure class="image">
+                        <img class="is-rounded" src="<%= personaje.imagen %>" />
+                    </figure>
+                </div>
+                    
+            <% } %>
+            
+        <% } %>
+
+        </div>
+    </div>
+</section>
+
+<%- include('includes/_footer') %>

@@ -1,0 +1,31 @@
+{
+  "name": "tc2005b_lol",
+  "version": "1.0.0",
+  "description": "Laboratorios de apoyo de TC2005B con temática de LoL",
+  "main": "app.js",
+  "scripts": {
+    "start": "node --watch app.js",
+    "hola": "echo \"hola\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ejuarezp/tc2005b_lol.git"
+  },
+  "keywords": [
+    "node",
+    "lol",
+    "express"
+  ],
+  "author": "Eduardo Juárez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ejuarezp/tc2005b_lol/issues"
+  },
+  "homepage": "https://github.com/ejuarezp/tc2005b_lol#readme",
+  "dependencies": {
+    "body-parser": "^2.2.2",
+    "ejs": "^4.0.1",
+    "express": "^5.2.1"
+  }
+}

@@ -1,0 +1,31 @@
+<form action="/personajes/new" method="POST">
+  <div class="field">
+    <label class="label">Nombre</label>
+    <div class="control">
+      <input name="nombre" class="input" type="text" placeholder="e.g Vi" required>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Descripción</label>
+    <div class="control">
+      <input name="descripcion" class="input" type="text" placeholder="e.g. Criada en Zaun..." required>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Tipo</label>
+    <div class="control">
+      <input name="tipo" class="input" type="text" placeholder="e.g. Peleador" required>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Imagen</label>
+    <div class="control">
+      <input name="imagen" class="input" type="text" placeholder="https://..." required>
+    </div>
+  </div>
+
+  <button class="button is-primary" type="submit">Guardar personaje</button>
+</form>
