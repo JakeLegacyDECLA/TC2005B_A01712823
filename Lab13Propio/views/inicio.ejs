@@ -1,0 +1,29 @@
+<%- include('includes/_header') %>
+
+<div class="box">
+  <h1 class="title">Bienvenido al Laboratorio 13</h1>
+  <p class="subtitle">Sistema de Gestión de Usuarios</p>
+
+  <div class="content">
+    <p>Este es un sistema simple de gestión de usuarios que incluye:</p>
+    <ul>
+      <li>Registro de nuevos usuarios</li>
+      <li>Inicio de sesión</li>
+      <li>Gestión de sesiones</li>
+      <li>Validación de contraseñas</li>
+    </ul>
+
+    <% if (username != '') { %>
+      <div class="notification is-success">
+        <p>¡Hola <strong><%= username %></strong>! Estás autenticado en el sistema.</p>
+      </div>
+      <a class="button is-danger" href="/users/logout">Cerrar Sesión</a>
+    <% } else { %>
+      <div class="notification is-info">
+        <p>Para acceder a todas las funcionalidades, por favor <a href="/users/login">inicia sesión</a> o <a href="/users/signup">crea una cuenta</a>.</p>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<%- include('includes/_footer') %>

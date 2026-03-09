@@ -28,6 +28,7 @@ exports.post_signup = () => {
     if (request.body.password != request.body.cpassword) {
         request.session.error = 'Las contraseñas no coinciden';
         response.redirect('/users/signup');
-    }
+    } else {
     response.redirect('/users/login');
+    }
 };

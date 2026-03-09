@@ -1,7 +1,9 @@
 const Personaje = require('../models/personaje.model');
 
 exports.get_add = (request, response, next) => {
-    response.render('new');
+    response.render('new', {
+        username: request.session.username || '',
+    });
 };
 
 exports.post_add = (request, response, next) => {
