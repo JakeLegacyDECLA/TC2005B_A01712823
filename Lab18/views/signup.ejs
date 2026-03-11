@@ -1,0 +1,54 @@
+<%- include('includes/_header') %>
+
+<% if(error != '') { %>
+<article class="message is-danger">
+    <div class="message-header">
+        <p>Danger</p>
+        <button class="delete" aria-label="delete"></button>
+    </div>
+    <div class="message-body">
+        <%= error %>
+    </div>
+</article>
+<% } %>
+
+<form action="/users/signup" method="POST">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+    <div class="field">
+        <label for="username" class="label">Nombre de usuario</label>
+        <div class="control">
+            <input id="username" name="username" class="input" type="text" placeholder="e.g Vi" required>
+        </div>
+    </div>
+
+    <div class="field">
+        <label for="nombre" class="label">Nombre</label>
+        <div class="control">
+            <input id="nombre" name="nombre" class="input" type="text" placeholder="e.g Lucca" required>
+        </div>
+    </div>
+
+    <div class="field">
+        <label for="correo" class="label">Correo</label>
+        <div class="control">
+            <input id="correo" name="correo" class="input" type="email" placeholder="e.g umpa_lucca@gmail.com" required>
+        </div>
+    </div>
+
+    <div class="field">
+        <label for="password" class="label">Password</label>
+        <div class="control">
+            <input id="password" name="password" class="input" type="password" required>
+        </div>
+    </div>
+
+    <div class="field">
+        <label for="password_confirm" class="label">Confirmar Password</label>
+        <div class="control">
+            <input id="password_confirm" name="password_confirm" class="input" type="password" required>
+        </div>
+    </div>
+
+    <input class="button is-primary" type="submit" value="Entrar">
+</form>
+<%- include('includes/_footer') %>

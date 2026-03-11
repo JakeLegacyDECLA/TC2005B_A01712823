@@ -1,0 +1,37 @@
+<%- include('includes/_header') %>
+
+<% for (let permiso of permisos) { %>
+    <% if (permiso.nombre_privilegio == 'crear_personajes') { %>
+        <a class="button is-primary" href="/personajes/new">Nuevo personaje</a>
+    <% } %>
+<% } %>
+
+        <div class="columns">
+
+        <% if(personajes.length == 0) { %>
+            <div class="column">
+                No hay personajes registrados.
+            </div>
+        <% } else { %>
+
+            <% for (let personaje of personajes) { %>
+
+                <div class="column">
+                    <a href="/personajes/<%= personaje.id %>"><%= personaje.nombre %></a>
+                    <figure class="image">
+                        <img class="is-rounded" src="<%= personaje.imagen %>" />
+                    </figure>
+                    <a class="button is-primary" href="/personajes/<%= personaje.id %>/edit">
+                        <span>Editar</span>
+                    </a>
+                </div>
+                    
+            <% } %>
+            
+        <% } %>
+
+        </div>
+    </div>
+</section>
+
+<%- include('includes/_footer') %>
