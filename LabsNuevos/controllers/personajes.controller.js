@@ -13,8 +13,14 @@ exports.get_add = (request, response, next) => {
     });
 };
 
+
 exports.post_add = (request, response, next) => {
-    const personaje = new Personaje(request.body.nombre, request.body.tipo, request.body.imagen);
+    const personaje = new Personaje(
+        request.body.nombre,
+        request.body.descripcion,
+        request.body.tipo,
+        request.body.imagen
+    );
     personaje.save().then(() => {
         return response.redirect('/personajes');
     }).catch((error) => {
@@ -35,19 +41,7 @@ exports.get_list = (request, response, next) => {
     });
 };
 
-exports.get_add = (request, response, next) => {
-    console.log(request.session.permisos);
-    Personaje.fetch(request.params.personaje_id).then(([rows, fieldData]) => {
-        return response.render('list', {
-            permisos: request.session.permisos,
-            username: request.session.username || '',
-            personajes: rows,
-        });
-        }).catch((error) => {
-            console.log(error);
-            next(error);
-        });
-}
+
 
 exports.get_edit = (request, response, next) => {
     Personaje.fetchOne(request.params.personaje_id).then(([personaje, fieldData]) => {

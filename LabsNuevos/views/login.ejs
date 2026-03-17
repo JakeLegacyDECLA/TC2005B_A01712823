@@ -1,4 +1,9 @@
 <%- include('includes/_header') %>
+<% if (error && error.length > 0) { %>
+    <div class="notification is-danger">
+        <%= error %>
+    </div>
+<% } %>
 <form action="/users/login" method="POST">
     <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
     <div class="field">

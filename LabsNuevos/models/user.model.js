@@ -25,10 +25,10 @@ module.exports = class User {
         return db.execute("SELECT * FROM usuarios WHERE username = ?", [username]);
     }
 
-    static getPermisos(username) {
+    static getPermisos(id_usuario) {
         return db.execute(
             `SELECT nombre_privilegio FROM tiene t, roles r, posee p, privilegios pr
             WHERE id_usuario = ? AND t.id_rol=r.id AND r.id=p.id_rol AND p.id_privilegio=pr.id`, 
-            [username]);
+            [id_usuario]);
     }
 };

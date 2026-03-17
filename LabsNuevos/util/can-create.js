@@ -1,14 +1,7 @@
 module.exports = (request, response, next) => {
-    let continuar = true;
-    for (let permiso of request.session.permisos) {
-        if (permiso.nombre_privilegio == 'crear_personajes') {
-            continuar = false;
-            next();
-        }
+    if (request.session.permisos && request.session.permisos.some(permiso => permiso.nombre_privilegio === 'can-create')) {
+        return next();
     }
-    if (continuar) {
-        request.session.error = 
-            "No tiene autorizada esta parte de la aplicación, este incidente ha sido reportado.";
-        return response.redirect('/login');
-    }
+    request.session.error = "No tiene autorizada esta parte de la aplicación, este incidente ha sido reportado.";
+    return response.redirect('/users/login');
 };

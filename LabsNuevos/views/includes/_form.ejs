@@ -1,0 +1,48 @@
+<section class="section">
+	<div class="container">
+		<h1 class="title">Nuevo Personaje</h1>
+		<form action="/personajes/add" method="POST">
+			<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+			<div class="field">
+				<label class="label">Nombre</label>
+				<div class="control">
+					<input class="input" type="text" name="nombre" required>
+				</div>
+			</div>
+			<div class="field">
+				<label class="label">Descripción</label>
+				<div class="control">
+					<input class="input" type="text" name="descripcion" required>
+				</div>
+			</div>
+			<div class="field">
+				<label class="label">Tipo</label>
+				<div class="control">
+					<div class="select">
+						<select name="tipo" required>
+							<% if (tipos && tipos.length > 0) { %>
+								<% tipos.forEach(function(tipo) { %>
+									<option value="<%= tipo.id %>"><%= tipo.nombre %></option>
+								<% }); %>
+							<% } %>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="field">
+				<label class="label">Imagen (URL)</label>
+				<div class="control">
+					<input class="input" type="text" name="imagen" required>
+				</div>
+			</div>
+			<div class="field is-grouped">
+				<div class="control">
+					<button class="button is-link" type="submit">Crear</button>
+				</div>
+				<div class="control">
+					<a class="button is-light" href="/personajes">Cancelar</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>

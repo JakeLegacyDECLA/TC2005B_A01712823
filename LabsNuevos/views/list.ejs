@@ -1,8 +1,8 @@
 <%- include('includes/_header') %>
 
 <% for (let permiso of permisos) { %>
-    <% if (permiso.nombre_privilegio == 'crear_personajes') { %>
-        <a class="button is-primary" href="/personajes/new">Nuevo personaje</a>
+    <% if (permiso.nombre_privilegio == 'can-create') { %>
+        <a class="button is-primary" href="/personajes/add">Nuevo personaje</a>
     <% } %>
 <% } %>
 
