@@ -1,0 +1,131 @@
+Materiales(Clave, Descripción, Costo, Porcentaje, Impuesto)
+Proveedores(RFC, RazonSocial)
+Proyectos(Numero, Denominacion)
+Entregan(Clave, RFC, Numero, Fecha, Cantidad)
+
+------------------------------------------------------------
+
+La suma de las cantidades e importe total de todas las entregas realizadas durante el 97.
+
+SELECT SUM(Cantidad) as 'Cantidad Total', SUM(Cantidad * (Costo + Impuesto)) as 'Importe total' 
+FROM Materiales as M inner join Entregan as E On M.clave = E.clave
+AND Fecha BETWEEN '01/01/1997' AND '31/12/1997'; 
+
+------------------------------------------------------------
+
+Para cada proveedor, obtener la razón social del proveedor, número de entregas e importe total de las entregas realizadas.
+
+SELECT P.RazonSocial, COUNT(E.RFC) AS 'Numero entregas', SUM(E.Cantidad * (M.Costo + M.Impuesto)) as 'Importe total' 
+FROM Proveedores as P, Entregan as E, Materiales as M
+WHERE P.RFC = E.RFC AND E.Clave = M.Clave
+GROUP BY P.RazonSocial
+
+------------------------------------------------------------
+
+Por cada material obtener la clave y descripción del material, la cantidad total entregada, la mínima cantidad entregada, la máxima cantidad entregada, el importe total de las entregas de aquellos materiales en los que la cantidad promedio entregada sea mayor a 400.
+
+SELECT M.Clave, M.Descripción, SUM(E.Cantidad) AS 'Total', MIN(E.Cantidad) AS 'Min', MAX(E.Cantidad) AS 'Max', SUM(E.Cantidad * (M.Costo + M.Impuesto)) as 'Importe total' 
+FROM Materiales as M INNER JOIN Entregan as E ON M.Clave = E.Clave
+GROUP BY M.Clave, M.Descripción
+HAVING AVG(E.Cantidad) > 400
+
+------------------------------------------------------------
+
+Para cada proveedor, indicar su razón social y mostrar la cantidad promedio de cada material entregado, detallando la clave y descripción del material, excluyendo aquellos proveedores para los que la cantidad promedio sea menor a 500.
+
+SELECT Pr.RazonSocial AS 'Razon Social', E.Clave AS 'Clave', M.descripcion AS 'Descripción', AVG(E.Cantidad) AS 'Cantidad Promedio'
+FROM Proveedores AS Pr, Entregan AS E, Materiales AS M
+WHERE Pr.RFC = E.RFC AND E.Clave = M.Clave
+GROUP BY Pr.RazonSocial, E.Clave, M.descripcion
+HAVING AVG(E.Cantidad) > 500
+
+------------------------------------------------------------
+
+Mostrar en una solo consulta los mismos datos que en la consulta anterior pero para dos grupos de proveedores: aquellos para los que la cantidad promedio entregada es menor a 370 y aquellos para los que la cantidad promedio entregada sea mayor a 450.
+
+SELECT Pr.RazonSocial AS 'Razon Social', E.Clave AS 'Clave', M.descripcion AS 'Descripción', AVG(E.Cantidad) AS 'Cantidad Promedio'
+FROM Proveedores AS Pr, Entregan AS E, Materiales AS M
+WHERE Pr.RFC = E.RFC AND E.Clave = M.Clave
+GROUP BY Pr.RazonSocial, E.Clave, M.descripcion
+HAVING AVG(E.Cantidad) < 370 OR AVG(E.Cantidad) > 450 
+
+------------------------------------------------------------
+
+Utilizando la sentencia
+
+INSERT INTO tabla VALUES (valorcolumna1, valorcolumna2, [...] , valorcolumnan) ;
+
+Considerando que los valores de tipos CHAR y VARCHAR deben ir encerrados entre apóstrofes, los valores numéricos se escriben directamente y los de fecha, como '1-JAN-00' para 1o. de enero del 2000, inserta cinco nuevos materiales.
+
+INSERT INTO materiales 
+VALUES 
+    (1341, 'Tabla roja', 300, 48),
+    (1301, 'Clavo acero', 10, 1.6),
+    (1302, 'Pintura azul', 450, 72),
+    (1303, 'Martillo pro', 250, 40),
+    (1304, 'Lija fina', 5, 0.8);
+
+------------------------------------------------------------
+
+Clave y descripción de los materiales que nunca han sido entregados.
+
+SELECT M.Clave, M.descripcion 
+FROM materiales AS M
+WHERE M.Clave NOT IN (SELECT M.Clave FROM materiales AS M INNER JOIN entregan AS E ON M.Clave = E.Clave)
+
+------------------------------------------------------------
+
+Razón social de los proveedores que han realizado entregas tanto al proyecto 'Vamos México' como al proyecto 'Querétaro Limpio'.
+
+SELECT Pr.RazonSocial
+FROM proveedores AS Pr, proyectos AS P
+WHERE P.denominacion IN (SELECT P.denominacion FROM proyectos AS P WHERE P.denominacion = 'Vamos México' or P.denominacion = 'Querétaro Limpio')
+GROUP BY Pr.RazonSocial
+
+------------------------------------------------------------
+
+Descripción de los materiales que nunca han sido entregados al proyecto 'CIT Yucatán'.
+
+SELECT M.descripcion, Pr.Denominacion
+FROM materiales AS M, entregan AS E, proyectos AS Pr
+WHERE M.Clave = E.Clave AND E.Numero = Pr.Numero
+AND Pr.Denominacion NOT IN (SELECT Pr.Denominacion FROM proyectos AS Pr WHERE Pr.Denominacion = 'CIT Yucatán')
+
+------------------------------------------------------------
+
+Razón social y promedio de cantidad entregada de los proveedores cuyo promedio de cantidad entregada es mayor al promedio de la cantidad entregada por el proveedor con el RFC 'VAGO780901'.
+
+SELECT 
+    p.RazonSocial,
+    AVG(e.Cantidad) AS PromedioCantidad
+FROM Proveedores p
+JOIN Entregan e ON p.RFC = e.RFC
+GROUP BY p.RazonSocial, p.RFC
+HAVING AVG(e.Cantidad) > (
+    SELECT AVG(e2.Cantidad)
+    FROM Entregan e2
+    WHERE e2.RFC = 'VAGO780901'
+);
+
+------------------------------------------------------------
+
+RFC, razón social de los proveedores que participaron en el proyecto 'Infonavit Durango' y cuyas cantidades totales entregadas en el 2000 fueron mayores a las cantidades totales entregadas en el 2001.
+
+SELECT 
+    p.RFC,
+    p.RazonSocial
+FROM Proveedores p
+JOIN Entregan e ON p.RFC = e.RFC
+JOIN Proyectos pr ON e.Numero = pr.Numero
+WHERE pr.Denominacion = 'Infonavit Durango'
+GROUP BY p.RFC, p.RazonSocial
+HAVING 
+    SUM(CASE 
+            WHEN YEAR(e.Fecha) = 2000 THEN e.Cantidad 
+            ELSE 0 
+        END) 
+    >
+    SUM(CASE 
+            WHEN YEAR(e.Fecha) = 2001 THEN e.Cantidad 
+            ELSE 0 
+        END);
