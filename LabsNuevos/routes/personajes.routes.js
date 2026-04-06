@@ -7,6 +7,7 @@ const personajesController = require('../controllers/personajes.controller');
 
 router.get('/', isAuth, personajesController.get_list);
 router.get('/add', isAuth, canCreate, personajesController.get_add);
+router.post('/add', isAuth, canCreate, personajesController.post_add);
 router.post('/edit', isAuth, personajesController.post_edit);
 router.get('/:personaje_id/edit', isAuth, personajesController.get_edit);
 router.get('/:personaje', isAuth, personajesController.get_list);

@@ -15,11 +15,16 @@ exports.get_add = (request, response, next) => {
 
 
 exports.post_add = (request, response, next) => {
+    // Verificar que se haya subido un archivo
+    if (!request.file) {
+        return next(new Error('Debe seleccionar una imagen'));
+    }
+
     const personaje = new Personaje(
         request.body.nombre,
         request.body.descripcion,
         request.body.tipo,
-        request.body.imagen
+        request.file.path  // Usar la ruta del archivo subido
     );
     personaje.save().then(() => {
         return response.redirect('/personajes');
@@ -64,11 +69,19 @@ exports.get_edit = (request, response, next) => {
 }
 
 exports.post_edit = (request, response, next) => {
-    Personaje.edit(request.body.id, request.body.nombre, request.body.descripcion, request.body.tipo, request.body.imagen).then(() => {
-        return response.redirect('/personajes');
+    // Obtener la imagen actual del personaje
+    Personaje.fetchOne(request.body.id).then(([personajeActual, fieldData]) => {
+        // Si no se subió nuevo archivo, mantener la imagen anterior
+        const imagenFinal = request.file ? request.file.path : personajeActual[0].imagen;
+        
+        Personaje.edit(request.body.id, request.body.nombre, request.body.descripcion, request.body.tipo, imagenFinal).then(() => {
+            return response.redirect('/personajes');
+        }).catch((error) => {
+            next(error);
+        });
     }).catch((error) => {
         next(error);
-    })
+    });
 }
 
 

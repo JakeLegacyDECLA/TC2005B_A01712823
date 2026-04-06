@@ -1,7 +1,7 @@
 <section class="section">
 	<div class="container">
 		<h1 class="title">Nuevo Personaje</h1>
-		<form action="/personajes/add" method="POST">
+		<form action="/personajes/add" method="POST" enctype="multipart/form-data">
 			<input type="hidden" name="_csrf" value="<%= csrfToken %>">
 			<div class="field">
 				<label class="label">Nombre</label>
@@ -30,14 +30,17 @@
 				</div>
 			</div>
 			<div class="field">
-				<label class="label">Imagen (URL)</label>
+				<label class="label">Imagen</label>
 				<div class="control">
-					<input class="input" type="text" name="imagen" required>
+					<input class="input" type="file" name="imagen" accept="image/png,image/jpeg,image/jpg" <% if (!edit) { %>required<% } %>>
+					<% if (edit && personaje && personaje.imagen) { %>
+						<p class="help">Imagen actual: <%= personaje.imagen %></p>
+					<% } %>
 				</div>
 			</div>
 			<div class="field is-grouped">
 				<div class="control">
-					<button class="button is-link" type="submit">Crear</button>
+					<button class="button is-link" type="submit"><%= edit ? 'Actualizar' : 'Crear' %></button>
 				</div>
 				<div class="control">
 					<a class="button is-light" href="/personajes">Cancelar</a>
