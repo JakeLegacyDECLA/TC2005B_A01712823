@@ -18,6 +18,8 @@ app.use(session({
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
+// Middleware para manejar peticiones JSON (AJAX)
+app.use(bodyParser.json());
 
 // Configurar multer para manejo de archivos
 const multer = require('multer');
@@ -54,6 +56,14 @@ const rutas_usuarios = require('./routes/users.routes');
 app.use('/users', rutas_usuarios);
 const rutas_personajes = require('./routes/personajes.routes');
 app.use('/personajes', rutas_personajes);
+
+// Ruta para página de información de AJAX
+const isAuth = require('./util/is-auth');
+app.get('/ajax-info', isAuth, (request, response) => {
+    response.render('ajax-info', {
+        username: request.session.username || ''
+    });
+});
 
 app.use((error, request, response, next) => {
     response.status(500).send(`Error interno del servidor: ${error.stack}`);

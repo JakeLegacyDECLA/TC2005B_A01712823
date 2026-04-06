@@ -40,6 +40,7 @@ exports.get_list = (request, response, next) => {
             permisos: request.session.permisos || [],
             username: request.session.username || '',
             personajes: rows,
+            csrfToken: request.csrfToken(),
         }); 
     }).catch((error) => {
         next(error);
@@ -83,5 +84,58 @@ exports.post_edit = (request, response, next) => {
         next(error);
     });
 }
+
+// AJAX: Cambiar tipo de personaje asincronamente
+exports.put_change_type = (request, response, next) => {
+    const { id, tipo_id } = request.body;
+
+    // Validar que se envíen los datos necesarios
+    if (!id || !tipo_id) {
+        return response.status(400).json({ 
+            success: false, 
+            message: 'Faltan datos requeridos' 
+        });
+    }
+
+    // Obtener datos actuales del personaje
+    Personaje.fetchOne(id).then(([personajeActual, fieldData]) => {
+        if (!personajeActual || personajeActual.length === 0) {
+            return response.status(404).json({ 
+                success: false, 
+                message: 'Personaje no encontrado' 
+            });
+        }
+
+        // Actualizar solo el tipo
+        Personaje.edit(
+            id, 
+            personajeActual[0].nombre, 
+            personajeActual[0].descripcion, 
+            tipo_id, 
+            personajeActual[0].imagen
+        ).then(() => {
+            response.status(200).json({ 
+                success: true, 
+                message: 'Tipo de personaje actualizado exitosamente' 
+            });
+        }).catch((error) => {
+            next(error);
+        });
+    }).catch((error) => {
+        next(error);
+    });
+};
+
+// AJAX: Obtener todos los tipos para el selector
+exports.get_types_json = (request, response, next) => {
+    Tipo.fetchAll().then(([rows, fieldData]) => {
+        response.status(200).json({ 
+            success: true, 
+            tipos: rows 
+        });
+    }).catch((error) => {
+        next(error);
+    });
+};
 
 

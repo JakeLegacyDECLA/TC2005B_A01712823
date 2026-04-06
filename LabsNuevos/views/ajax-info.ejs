@@ -1,0 +1,114 @@
+<%- include('includes/_header') %>
+
+<section class="section">
+    <div class="container">
+        <h1 class="title">Componentes AJAX de la Aplicación</h1>
+        
+        <div class="box">
+            <h2 class="subtitle is-4">¿Qué es AJAX?</h2>
+            <p>AJAX (Asynchronous JavaScript and XML) permite hacer peticiones HTTP asincrónicas desde el navegador sin recargar toda la página. Esto proporciona una experiencia de usuario más fluida e interactiva.</p>
+        </div>
+
+        <div class="columns">
+            <div class="column">
+                <div class="box">
+                    <h3 class="subtitle is-5">Cambio de Tipo de Personaje</h3>
+                    <p><strong>Ubicación:</strong> Lista de Personajes</p>
+                    <p><strong>Funcionamiento:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Selecciona un nuevo tipo en el dropdown de cada personaje</li>
+                        <li>El cambio se envía al servidor automáticamente vía AJAX</li>
+                        <li>La página NO se recarga</li>
+                        <li>Recibes confirmación del éxito o error mediante notificación</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>Endpoint:</strong> <code>PUT /personajes/api/change-type</code></p>
+                    <p><strong>Datos Enviados (JSON):</strong></p>
+                    <pre style="background-color: #f5f5f5; padding: 10px; border-radius: 4px;">
+{
+  "id": 1,
+  "tipo_id": 2
+}</pre>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="box">
+                    <h3 class="subtitle is-5">Carga de Tipos Disponibles</h3>
+                    <p><strong>Ubicación:</strong> Lista de Personajes</p>
+                    <p><strong>Funcionamiento:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Cuando carga la página, se obtienen todos los tipos disponibles</li>
+                        <li>Los tipos se cargan de forma asincrónica</li>
+                        <li>Se muestran dinámicamente en cada selector</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>Endpoint:</strong> <code>GET /personajes/api/tipos</code></p>
+                    <p><strong>Respuesta (JSON):</strong></p>
+                    <pre style="background-color: #f5f5f5; padding: 10px; border-radius: 4px;">
+{
+  "success": true,
+  "tipos": [
+    {"id": 1, "nombre": "Mago"},
+    {"id": 2, "nombre": "Guerrero"}
+  ]
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <h3 class="subtitle is-4">Seguridad CSRF</h3>
+            <p>Todas las peticiones AJAX incluyen un token CSRF en el header <code>csrf-token</code> para proteger contra ataques de Cross-Site Request Forgery. Este token se obtiene de un input hidden en cada página.</p>
+        </div>
+
+        <div class="box">
+            <h3 class="subtitle is-4">Arquitectura</h3>
+            <p><strong>Cliente (Frontend):</strong></p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li><code>public/js/ajax-personajes.js</code> - Código JavaScript para peticiones AJAX</li>
+                <li><code>views/list.ejs</code> - Vista con selectores AJAX</li>
+            </ul>
+            
+            <p style="margin-top: 15px;"><strong>Servidor (Backend):</strong></p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li><code>app.js</code> - Middleware bodyParser para JSON</li>
+                <li><code>controllers/personajes.controller.js</code> - Acciones para API AJAX</li>
+                <li><code>routes/personajes.routes.js</code> - Rutas API (<code>/api/change-type</code>, <code>/api/tipos</code>)</li>
+                <li><code>models/personaje.model.js</code> - Modelo para acceso a BD</li>
+            </ul>
+        </div>
+
+        <div class="box">
+            <h3 class="subtitle is-4">Diagrama de Flujo AJAX</h3>
+            <p style="text-align: center; margin-top: 20px;">
+                <strong>
+                    Navegador (click en select) → AJAX Fetch → Servidor (Controller)
+                    <br>→ Modelo (Query) → Base de Datos → Response JSON
+                    <br>→ Actualizar DOM sin recargar
+                </strong>
+            </p>
+        </div>
+
+        <div class="box is-success">
+            <h3 class="subtitle is-5">Ventajas Implementadas</h3>
+            <ul style="margin-left: 20px;">
+                <li>Experiencia de usuario mejorada (sin recargas)</li>
+                <li>Respuestas rápidas y fluidas</li>
+                <li>Manejo de errores con notificaciones</li>
+                <li>Seguridad con tokens CSRF</li>
+                <li>Datos en formato JSON (estándar moderno)</li>
+                <li>Arquitectura MVC clara y mantenible</li>
+            </ul>
+        </div>
+
+        <div class="buttons" style="margin-top: 30px;">
+            <a href="/personajes" class="button is-primary">
+                Ver Componentes en Acción
+            </a>
+            <a href="/" class="button">
+                Volver al Inicio
+            </a>
+        </div>
+    </div>
+</section>
+
+<%- include('includes/_footer') %>
