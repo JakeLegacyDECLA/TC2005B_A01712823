@@ -1,8 +1,40 @@
 <%- include('includes/_header') %>
 
+<!-- Sección Spotify -->
+<div class="container" style="margin-bottom: 20px;">
+    <div class="box">
+        <div class="level">
+            <div class="level-left">
+                <div class="level-item">
+                    <% if (spotifyConnected) { %>
+                        <div>
+                            <p class="is-size-5"><strong>🎵 Spotify conectado</strong></p>
+                            <p class="is-size-7" style="color: #888; margin-top: 5px;">Usuario: <%= spotifyUsername %></p>
+                        </div>
+                    <% } else { %>
+                        <p class="is-size-5"><strong>🎵 Conecta con Spotify para ver tus canciones favoritas</strong></p>
+                    <% } %>
+                </div>
+            </div>
+            <div class="level-right">
+                <div class="level-item">
+                    <% if (spotifyConnected) { %>
+                        <div>
+                            <a class="button is-info" href="/spotify/top-tracks">Ver mis canciones favoritas</a>
+                            <a class="button is-light" href="/spotify/logout">Desconectar</a>
+                        </div>
+                    <% } else { %>
+                        <a class="button is-success" href="/spotify/login">🎵 Conectar con Spotify</a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container">
     <div class="box">
-        <h2 class="subtitle is-5">ℹ️ Componentes AJAX Utilizados:</h2>
+        <h2 class="subtitle is-5">Componentes AJAX Utilizados:</h2>
         <ul style="margin-left: 20px;">
             <li>✓ <strong>Cambio de Tipo de Personaje:</strong> Al cambiar el tipo en el selector, se actualiza asincronamente sin recargar la página</li>
         </ul>
@@ -12,7 +44,7 @@
 <div class="container" style="margin-top: 20px;">
     <% for (let permiso of permisos) { %>
         <% if (permiso.nombre_privilegio == 'can-create') { %>
-            <a class="button is-primary" href="/personajes/add">Nuevo personaje</a>
+            <a class="button is-primary" href="/personajes/add">➕ Nuevo personaje</a>
         <% } %>
     <% } %>
 
@@ -68,7 +100,7 @@
 <!-- Token CSRF para peticiones AJAX -->
 <input type="hidden" id="_csrf" value="<%= csrfToken %>">
 
-<!-- Script AJAX -->
+<!-- Script AJAX para personajes -->
 <script src="/js/ajax-personajes.js"></script>
 
 <%- include('includes/_footer') %>

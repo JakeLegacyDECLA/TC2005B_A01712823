@@ -79,16 +79,28 @@ exports.get_logout = (request, response, next) => {
 // ======================
 // PERSONAJES (PROTECTED)
 // ======================
-exports.get_personajes = (request, response, next) => {
+exports.get_personajes = async (request, response, next) => {
 
     if (!request.session.isLoggedIn) {
         return response.redirect('/users/login');
     }
 
-    response.render('list', {
-        username: request.session.username,
-        permisos: request.session.permisos || []
-    });
+    try {
+        const Personaje = require('../models/personaje.model');
+        const [personajes] = await Personaje.fetchAll();
+
+        response.render('list', {
+            username: request.session.username,
+            permisos: request.session.permisos || [],
+            personajes: personajes || [],
+            csrfToken: request.csrfToken(),
+            spotifyConnected: !!request.session.spotifyAccessToken,
+            spotifyUsername: request.session.spotifyUsername || ''
+        });
+    } catch (error) {
+        console.log("ERROR FETCHING PERSONAJES:", error);
+        next(error);
+    }
 
 };
 

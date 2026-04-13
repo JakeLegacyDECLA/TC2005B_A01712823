@@ -1,0 +1,61 @@
+<%- include('includes/_header') %>
+
+<div class="container" style="margin-top: 30px;">
+    <div class="box">
+        <h1 class="title is-3">🎵 Tus canciones favoritas</h1>
+        <p class="subtitle is-6">
+            <% if (isUserTracks) { %>
+                Tus 5 canciones más escuchadas en Spotify
+            <% } else { %>
+                Canciones populares
+            <% } %>
+        </p>
+        <a class="button is-light" href="/personajes">← Volver</a>
+    </div>
+</div>
+
+<div class="container" style="margin-top: 20px; margin-bottom: 30px;">
+    <% if (tracks && tracks.length > 0) { %>
+        <% tracks.forEach((track, index) => { %>
+            <div class="box" style="margin-bottom: 20px;">
+                <div style="display: flex; gap: 15px;">
+                    <!-- Imagen -->
+                    <div style="flex-shrink: 0;">
+                        <% if (track.image) { %>
+                            <img src="<%= track.image %>" alt="<%= track.album %>" style="width: 100px; height: 100px; border-radius: 5px;">
+                        <% } else { %>
+                            <div style="width: 100px; height: 100px; background: #ddd; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: #999;">Sin imagen</div>
+                        <% } %>
+                    </div>
+
+                    <!-- Información -->
+                    <div style="flex: 1;">
+                        <p style="font-size: 12px; color: #888;"><strong>#<%= track.position %></strong></p>
+                        <h3 style="font-size: 18px; font-weight: bold; margin: 5px 0;"><%= track.name %></h3>
+                        <p style="margin: 3px 0; color: #666;"><strong>Artista:</strong> <%= track.artist %></p>
+                        <p style="margin: 3px 0; color: #999; font-size: 14px;"><strong>Álbum:</strong> <%= track.album %></p>
+                    </div>
+
+                    <!-- Audio y link -->
+                    <div style="flex-shrink: 0; text-align: right;">
+                        <% if (track.previewUrl) { %>
+                            <audio controls style="width: 180px; height: 30px; margin-bottom: 10px;">
+                                <source src="<%= track.previewUrl %>" type="audio/mpeg">
+                            </audio>
+                        <% } else { %>
+                            <p style="font-size: 12px; color: #999; margin-bottom: 10px;">Sin preview</p>
+                        <% } %>
+                        <br>
+                        <a class="button is-small is-success" href="<%= track.url %>" target="_blank">🎵 Spotify</a>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    <% } else { %>
+        <div class="notification is-warning">
+            <p>No se encontraron canciones. Intenta de nuevo más tarde.</p>
+        </div>
+    <% } %>
+</div>
+
+<%- include('includes/_footer') %>

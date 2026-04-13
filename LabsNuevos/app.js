@@ -7,13 +7,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.set('view engine', 'ejs');
-app.set('views', 'views');
+app.set('views', path.join(__dirname, 'views'));
 
 const session = require('express-session');
 app.use(session({
     secret: 'mi string secreto que debe ser un string aleatorio muy largo, no como éste', 
     resave: false, //La sesión no se guardará en cada petición, sino sólo se guardará si algo cambió 
-    saveUninitialized: false, //Asegura que no se guarde una sesión para una petición que no lo necesita
+    saveUninitialized: true, //Guardar sesión incluso si está vacía - NECESARIO para Spotify
 }));
 
 const bodyParser = require('body-parser');
@@ -50,12 +50,27 @@ app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('imagen'
 
 const csrf = require('csurf');
 const csrfProtection = csrf({ cookie: false });
-app.use(csrfProtection);
+
+// Aplicar CSRF a todas las rutas EXCEPTO /spotify
+app.use((request, response, next) => {
+    // Exentar rutas de Spotify del CSRF
+    if (request.path.startsWith('/spotify')) {
+        return next();
+    }
+    csrfProtection(request, response, next);
+});
 
 const rutas_usuarios = require('./routes/users.routes');
 app.use('/users', rutas_usuarios);
 const rutas_personajes = require('./routes/personajes.routes');
 app.use('/personajes', rutas_personajes);
+const rutas_spotify = require('./routes/spotify.routes');
+app.use('/spotify', rutas_spotify);
+
+// Ruta raíz - Redirigir a login
+app.get('/', (request, response) => {
+    response.redirect('/users/login');
+});
 
 // Ruta para página de información de AJAX
 const isAuth = require('./util/is-auth');

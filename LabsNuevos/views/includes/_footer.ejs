@@ -1,13 +1,128 @@
 <section>
     <footer class="footer">
-    <div class="content has-text-centered">
-        <p>
+    <div class="content">
+        <p class="has-text-centered">
         <strong>Destinos Clandestinos</strong>  es una historia creada por <a href="https://www.instagram.com/cesaraguilar_ud/">César Kuri</a>
         </p>
+        
+        <!-- Top 5 Canciones de Spotify -->
+        <div id="spotify-tracks" class="mt-5">
+            <h3 class="title is-5 has-text-centered" id="spotify-title">🎵 Top 5 Canciones</h3>
+            
+            <!-- Botón de login/logout -->
+            <div class="has-text-centered mb-3">
+                <button id="spotify-auth-btn" class="button is-success">
+                    <span class="icon">
+                        <i class="fab fa-spotify"></i>
+                    </span>
+                    <span>Conectar con Spotify</span>
+                </button>
+            </div>
+
+            <div id="tracks-container" class="columns is-multiline is-centered">
+                <p class="is-loading">Cargando canciones...</p>
+            </div>
+        </div>
     </div>
     </footer>
 
 </section>
+
+<script>
+    let isSpotifyLoggedIn = false;
+
+    // Verificar estado de autenticación con Spotify
+    async function checkSpotifyAuth() {
+        try {
+            const response = await fetch('/spotify/is-logged-in');
+            const data = await response.json();
+            isSpotifyLoggedIn = data.isLoggedIn;
+            updateAuthButton();
+        } catch (error) {
+            console.error('Error verificando autenticación con Spotify:', error);
+        }
+    }
+
+    // Actualizar el botón según el estado de autenticación
+    function updateAuthButton() {
+        const btn = document.getElementById('spotify-auth-btn');
+        const title = document.getElementById('spotify-title');
+
+        if (isSpotifyLoggedIn) {
+            btn.textContent = '';
+            btn.innerHTML = `<span class="icon"><i class="fab fa-spotify"></i></span><span>Desconectar de Spotify</span>`;
+            btn.classList.add('is-danger');
+            btn.classList.remove('is-success');
+            btn.onclick = () => window.location.href = '/spotify/logout';
+            title.textContent = '🎵 Mi Top 5 en Spotify';
+        } else {
+            btn.textContent = '';
+            btn.innerHTML = `<span class="icon"><i class="fab fa-spotify"></i></span><span>Conectar con Spotify</span>`;
+            btn.classList.add('is-success');
+            btn.classList.remove('is-danger');
+            btn.onclick = () => window.location.href = '/spotify/login';
+            title.textContent = '🎵 Top 5 Canciones Populares';
+        }
+    }
+
+    // Cargar las top 5 canciones cuando la página carga
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Primero verificar autenticación
+        await checkSpotifyAuth();
+
+        try {
+            const response = await fetch('/spotify/api/top-tracks');
+            const data = await response.json();
+            
+            const container = document.getElementById('tracks-container');
+            container.innerHTML = ''; // Limpiar
+
+            const tracks = data.tracks || [];
+
+            if (tracks.length === 0) {
+                container.innerHTML = '<p class="has-text-centered">No se pudieron cargar las canciones</p>';
+                return;
+            }
+
+            tracks.forEach(track => {
+                const trackCard = document.createElement('div');
+                trackCard.className = 'column is-one-fifth-desktop is-half-tablet';
+                
+                trackCard.innerHTML = `
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-square">
+                                <img src="${track.image}" alt="${track.name}">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <p class="heading is-6">#${track.position}</p>
+                                <p class="title is-6">${track.name}</p>
+                                <p class="subtitle is-6">${track.artist}</p>
+                                <small>${track.album}</small>
+                                <br><br>
+                                <a href="${track.url}" target="_blank" class="button is-small is-success">
+                                    <span class="icon">
+                                        <i class="fab fa-spotify"></i>
+                                    </span>
+                                    <span>Escuchar</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(trackCard);
+            });
+
+        } catch (error) {
+            console.error('Error cargando canciones de Spotify:', error);
+            document.getElementById('tracks-container').innerHTML = 
+                '<p class="has-text-centered has-text-danger">Error cargando las canciones</p>';
+        }
+    });
+</script>
     
-    </body>
+</body>
 </html>
